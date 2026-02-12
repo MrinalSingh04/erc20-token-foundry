@@ -1,66 +1,117 @@
-## Foundry
+# ERC20 Token – OurToken (OTK)
 
-**Foundry is a blazing fast, portable and modular toolkit for Ethereum application development written in Rust.**
+A minimal and production-ready ERC20 token implementation built using **Solidity** and **OpenZeppelin**.
 
-Foundry consists of:
+This project demonstrates understanding of:
+- ERC20 token standards
+- OpenZeppelin contract inheritance
+- Constructor-based minting
+- Token supply initialization
+- Secure smart contract design
 
-- **Forge**: Ethereum testing framework (like Truffle, Hardhat and DappTools).
-- **Cast**: Swiss army knife for interacting with EVM smart contracts, sending transactions and getting chain data.
-- **Anvil**: Local Ethereum node, akin to Ganache, Hardhat Network.
-- **Chisel**: Fast, utilitarian, and verbose solidity REPL.
+---
 
-## Documentation
+## 📌 Overview
 
-https://book.getfoundry.sh/
+`OurToken` is a standard ERC20 token that mints the entire initial supply to the contract deployer during deployment.
 
-## Usage
+The contract inherits from OpenZeppelin’s audited `ERC20` implementation to ensure security, reliability, and ERC20 compliance.
 
-### Build
+---
 
-```shell
-$ forge build
+## 🛠 Tech Stack
+
+- Solidity ^0.8.18
+- OpenZeppelin Contracts
+- Foundry (for testing & deployment)
+
+---
+
+## 📜 Contract Details
+
+**Token Name:** OurToken  
+**Token Symbol:** OTK  
+**Decimals:** 18 (default from OpenZeppelin ERC20)
+
+---
+
+## 🧠 Contract Architecture
+
+```solidity
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.18;
+
+import {ERC20} from "@openzeppelin/contracts/token/ERC20/ERC20.sol";
+
+contract OurToken is ERC20 {
+    constructor(uint256 initialSupply) ERC20("OurToken", "OTK") {
+        _mint(msg.sender, initialSupply);
+    }
+}
 ```
 
-### Test
+---
 
-```shell
-$ forge test
+## 🔹 How It Works
+
+- Inherits OpenZeppelin’s `ERC20` contract
+- Sets token name and symbol in constructor
+- Mints `initialSupply` to deployer address
+- Uses internal `_mint()` from ERC20
+
+---
+
+## 🚀 Deployment
+
+When deploying the contract, pass the `initialSupply` parameter.
+
+⚠️ ERC20 uses **18 decimals** by default.
+
+Example:
+
+To mint 1,000 tokens:
+
+```solidity
+1000 * 10**18
 ```
 
-### Format
+---
 
-```shell
-$ forge fmt
-```
+## 🔍 Inherited ERC20 Functions
 
-### Gas Snapshots
+The following core ERC20 functions are available:
 
-```shell
-$ forge snapshot
-```
+- `transfer(address to, uint256 amount)`
+- `approve(address spender, uint256 amount)`
+- `transferFrom(address from, address to, uint256 amount)`
+- `balanceOf(address account)`
+- `totalSupply()`
+- `allowance(address owner, address spender)`
 
-### Anvil
+All logic is inherited from OpenZeppelin’s audited implementation.
 
-```shell
-$ anvil
-```
+---
 
-### Deploy
+## 🔐 Security Considerations
 
-```shell
-$ forge script script/Counter.s.sol:CounterScript --rpc-url <your_rpc_url> --private-key <your_private_key>
-```
+- Uses OpenZeppelin’s battle-tested ERC20 implementation
+- Solidity ^0.8.x includes built-in overflow and underflow protection
+- Fixed supply model (no additional minting after deployment)
 
-### Cast
+---
 
-```shell
-$ cast <subcommand>
-```
+## 📚 Learning Objectives
 
-### Help
+This project demonstrates:
 
-```shell
-$ forge --help
-$ anvil --help
-$ cast --help
-```
+- Smart contract inheritance
+- ERC20 token mechanics
+- Constructor execution logic
+- Secure reuse of audited libraries
+- Token supply initialization patterns
+
+---
+
+## 📄 License
+
+MIT
